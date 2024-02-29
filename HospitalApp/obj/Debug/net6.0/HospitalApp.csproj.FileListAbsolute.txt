@@ -1,0 +1,15 @@
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\bin\Debug\net6.0\HospitalApp.exe
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\bin\Debug\net6.0\HospitalApp.deps.json
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\bin\Debug\net6.0\HospitalApp.runtimeconfig.json
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\bin\Debug\net6.0\HospitalApp.dll
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\bin\Debug\net6.0\HospitalApp.pdb
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.csproj.AssemblyReference.cache
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.AssemblyInfoInputs.cache
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.AssemblyInfo.cs
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.csproj.CoreCompileInputs.cache
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.dll
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\refint\HospitalApp.dll
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.pdb
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\HospitalApp.genruntimeconfig.cache
+C:\Users\nargizzn\Desktop\HospitalApp\HospitalApp\obj\Debug\net6.0\ref\HospitalApp.dll
