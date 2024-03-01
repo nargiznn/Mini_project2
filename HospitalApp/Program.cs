@@ -1,6 +1,7 @@
 ﻿using Core.Entitiy;
 using Data;
 using Service;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 string opt;
@@ -17,7 +18,9 @@ do
     Console.WriteLine("Select Opt");
     opt =Console.ReadLine();
     HosbitalDbContext context= new HosbitalDbContext();
-    PatientService patientService=new PatientService(); 
+    PatientService patientService=new PatientService();
+    DoctorService doctorService = new DoctorService();
+    AppointmentService appointmentService=new AppointmentService();
     switch (opt)
     {
         case "a":
@@ -51,6 +54,7 @@ do
                     case "2":
                         //2.Patient delete
                         Console.WriteLine(" Patient delete");
+                        Console.WriteLine("All Patients");
                         var patients2 = patientService.ShowAll();
 
                         foreach (var item in patients2)
@@ -71,6 +75,8 @@ do
                         break;
                     case "3":
                         //3.Patient edit
+                        Console.WriteLine(" Patient edit");
+                        Console.WriteLine("All Patients");
                         var patients1 = patientService.ShowAll();
 
                         foreach (var item in patients1)
@@ -91,6 +97,7 @@ do
                         break;
                     case "4":
                         //4.Show all patient
+                        Console.WriteLine("All Patients");
                         var patients = patientService.ShowAll();
 
                         foreach (var item in patients)
@@ -123,12 +130,67 @@ do
                 switch (optDoctor)
                 {
                     case "1":
+                        Console.WriteLine(" Doctor creat");
+                        Console.Write("FullName: ");
+                        string fullname = Console.ReadLine();
+                        Console.Write("Email: ");
+                        string email = Console.ReadLine();
+                        var newDoctor = new Doctor
+                        {
+                            Fullname = fullname,
+                            Email = email,
+                        };
+                        doctorService.Create(newDoctor);
                         break;
                     case "2":
+                        Console.WriteLine(" Edit doctor");
+                        Console.WriteLine("All Patients");
+                        var doctors1 = doctorService.ShowAll();
+                        foreach (var item in doctors1)
+                        {
+                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                        }
+                        int id = GetId();
+                        var newdoctor = GetDoctor();
+                        try
+                        {
+                            doctorService.Update(id, newdoctor);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "3":
+                        Console.WriteLine(" Delete doctor");
+                        Console.WriteLine("All Doctors");
+                        var doctors2 = doctorService.ShowAll();
+
+                        foreach (var item in doctors2)
+                        {
+                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                        }
+                        var doctors = doctorService.ShowAll();
+                        int deleteId = GetId();
+
+                        try
+                        {
+                            doctorService.Delete(deleteId);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "4":
+                        Console.WriteLine(" ShowAll doctors");
+                        Console.WriteLine("All Doctors");
+                        var doctors5 = doctorService.ShowAll();
+
+                        foreach (var item in doctors5)
+                        {
+                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                        }
                         break;
                     case "0":
                         Console.WriteLine("Finish");
@@ -155,12 +217,65 @@ do
                 switch (optAppointment)
                 {
                     case "1":
+                        Console.WriteLine(" Make an appointment");
+                        Console.WriteLine("All Doctors");
+                        var doctors2 = doctorService.ShowAll();
+
+                        foreach (var item in doctors2)
+                        {
+                            Console.WriteLine(item.Id + "." + item.Fullname );
+                        }
+                        Console.Write("DoctorId: ");
+                        int doctorId = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("All Patients");
+                        var patients2 = patientService.ShowAll();
+                        foreach (var item in patients2)
+                        {
+                            Console.WriteLine(item.Id + "." + item.Fullname );
+                        }
+                        Console.Write("PatientId: ");
+                        int patientId = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Datetime (yyyy/dd/mm: ");
+                        DateTime startDate = DateTime.Parse(Console.ReadLine());
+                        var newappointment = new Appointment
+                        {
+                            DoctorId = doctorId,
+                            PatientId = patientId,
+                            StartDate = startDate,
+                        };
+                        appointmentService.Create(newappointment);
                         break;
                     case "2":
+                        Console.WriteLine(" Cancel Appointment");
+                        Console.WriteLine("All Appointment");
+                        var appointment = appointmentService.ShowAll();
+
+                        foreach (var item in appointment)
+                        {
+                            Console.WriteLine(item.Id + "." + item.DoctorId + " "+item.PatientId+" "+item.StartDate );
+                        }
+                        int deleteId = GetId();
+
+                        try
+                        {
+                            patientService.Delete(deleteId);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "3":
+                        Console.WriteLine(" Show all appointments");
+                        var appointmentAll = appointmentService.ShowAll();
+
+                        foreach (var item in appointmentAll)
+                        {
+                            Console.WriteLine(item.Id + "." + item.DoctorId + " " + item.PatientId + " " + item.StartDate);
+                        }
                         break;
                     case "4":
+                        Console.WriteLine(" Filter appointments (by doctor id or patientId or daterange)");
                         break;
                     case "0":
                         Console.WriteLine("Finish");
@@ -210,5 +325,20 @@ Patient GetPatient()
     };
      
     return newpatient;
+
+}
+Doctor GetDoctor()
+{
+    Console.Write("Fullname: ");
+    string fullname = Console.ReadLine();
+    Console.Write("Email: ");
+    string email = Console.ReadLine();
+    var newdoctor = new Doctor
+    {
+        Fullname = fullname,
+        Email = email
+    };
+
+    return newdoctor;
 
 }

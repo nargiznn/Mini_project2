@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(HosbitalDbContext))]
-    [Migration("20240301124435_PatientCreatedTable")]
+    [Migration("20240301151517_PatientCreatedTable")]
     partial class PatientCreatedTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

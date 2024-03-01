@@ -11,5 +11,6 @@ namespace Core.Entitiy
         public int Id { get; set; }
         public string Fullname { get; set; }
         public string Email { get; set; }
+        public List<Appointment> Appointments { get; set; }
     }
 }
