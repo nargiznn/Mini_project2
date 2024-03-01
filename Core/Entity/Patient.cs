@@ -9,7 +9,7 @@ namespace Core.Entitiy
     public class Patient
     {
         public int Id { get; set; }
-        public string Fullame { get; set; }
+        public string Fullname { get; set; }
         public string Email { get; set; }
     }
 }
