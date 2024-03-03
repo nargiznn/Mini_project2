@@ -114,5 +114,28 @@ namespace Service
         {
             return _context.Appointment.ToList();
         }
+
+
+        public List<Appointment> FilterByDoctor(int doctorId)
+        {
+            return _context.Appointment
+                .Where(appointment => appointment.DoctorId == doctorId)
+                .ToList();
+        }
+
+        public List<Appointment> FilterByPatient(int patientId)
+        {
+            return _context.Appointment
+                .Where(appointment => appointment.PatientId == patientId)
+                .ToList();
+        }
+
+        public List<Appointment> FilterByDateRange(DateTime startDate, DateTime endDate)
+        {
+            return _context.Appointment
+                .Where(appointment => appointment.StartDate >= startDate && appointment.StartDate <= endDate)
+                .ToList();
+        }
     }
-}
+    }
+

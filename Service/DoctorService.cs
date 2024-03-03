@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -33,10 +34,31 @@ namespace Service
             _context.Doctors.Add(entity);
             _context.SaveChanges();
         }
-        public List<Doctor> ShowAll()
+        public List<string> ShowAll()
         {
-            return _context.Doctors.ToList();
+            var doctors = _context.Doctors.Include(d => d.Appointments).ToList();
+
+            List<string> doctorInfList = new List<string>();
+
+            foreach (var doctor in doctors)
+            {
+                string doctorInf = $"{doctor.Id}. {doctor.Fullname} ({doctor.Email})";
+
+                var nextAppointments = doctor.Appointments
+                    .Where(a => a.StartDate >= DateTime.Now)
+                    .OrderBy(a => a.StartDate)
+                    .ToList();
+
+                int nextAppointmentsCount = nextAppointments.Count;
+
+                doctorInf += $", Next Appointments: {nextAppointmentsCount}";
+
+                doctorInfList.Add(doctorInf);
+            }
+
+            return doctorInfList;
         }
+
         public void Delete(int id)
         {
             var entity = _context.Doctors.FirstOrDefault(x => x.Id == id);

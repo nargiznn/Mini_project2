@@ -4,10 +4,13 @@ using Service;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
+
 string opt;
 string optPatient;
 string optDoctor;
 string optAppointment;
+
+
 do
 {
     Console.WriteLine("=============================MENU===================================");
@@ -141,12 +144,13 @@ do
                         break;
                     case "2":
                         Console.WriteLine(" Edit doctor");
-                        Console.WriteLine("All Patients");
+                        Console.WriteLine("All Doctors :");
                         var doctors1 = doctorService.ShowAll();
                         foreach (var item in doctors1)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                            Console.WriteLine(item);
                         }
+
                         int id = GetId();
                         var newdoctor = GetDoctor();
                         try
@@ -163,10 +167,13 @@ do
                         Console.WriteLine("All Doctors");
                         var doctors2 = doctorService.ShowAll();
 
-                        foreach (var item in doctors2)
+                        Console.WriteLine("All Doctors ");
+                        doctors1 = doctorService.ShowAll();
+                        foreach (var item in doctors1)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                            Console.WriteLine(item);
                         }
+
                         var doctors = doctorService.ShowAll();
                         int deleteId = GetId();
 
@@ -181,13 +188,12 @@ do
                         break;
                     case "4":
                         Console.WriteLine(" ShowAll doctors");
-                        Console.WriteLine("All Doctors");
-                        var doctors5 = doctorService.ShowAll();
-
-                        foreach (var item in doctors5)
+                        doctors1 = doctorService.ShowAll();
+                        foreach (var item in doctors1)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                            Console.WriteLine(item);
                         }
+
                         break;
                     case "0":
                         Console.WriteLine("Finish");
@@ -215,13 +221,13 @@ do
                 {
                     case "1":
                         Console.WriteLine(" Make an appointment");
-                        Console.WriteLine("All Doctors");
-                        var doctors2 = doctorService.ShowAll();
-
-                        foreach (var item in doctors2)
+                        Console.WriteLine("All Doctors ");
+                         var doctors3 = doctorService.ShowAll();
+                        foreach (var item in doctors3)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname );
+                            Console.WriteLine(item);
                         }
+
                         Console.Write("DoctorId: ");
                         int doctorId = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("All Patients");
@@ -278,9 +284,15 @@ do
                         break;
                     case "4":
                         Console.WriteLine(" Filter appointments (by doctor id or patientId or daterange)");
+                        Console.WriteLine("1. Filter by Doctor ID");
+                        Console.WriteLine("2. Filter by Patient ID");
+                        Console.WriteLine("3. Filter by Date Range");
+                        Console.WriteLine("0. Exit");
+                        Console.Write("Select Opti: ");
+                       
                         break;
                     case "0":
-                        Console.WriteLine("Finish");
+                        Console.WriteLine("Finished");
                         break;
                     default:
                         Console.WriteLine("Opt is wrong");
