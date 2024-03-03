@@ -235,8 +235,13 @@ do
                         }
                         Console.Write("PatientId: ");
                         int patientId = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Datetime (yyyy/dd/mm: ");
-                        DateTime startDate = DateTime.Parse(Console.ReadLine());
+                        Console.Write("Datetime (yyyy/MM/dd: ");
+                        DateTime startDate;
+
+                        while (!DateTime.TryParseExact(Console.ReadLine(), "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
+                        {
+                            Console.WriteLine("Invalid date format. Enter the date in the correct format (yyyy/MM/dd): ");
+                        }
                         var newappointment = new Appointment
                         {
                             DoctorId = doctorId,
@@ -258,7 +263,7 @@ do
 
                         try
                         {
-                            patientService.Delete(deleteId);
+                            appointmentService.Delete(deleteId);
                         }
                         catch (Exception e)
                         {

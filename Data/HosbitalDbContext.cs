@@ -20,8 +20,13 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=MOON10\\MAINDB;Database=HosbitalDb;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(
+                "Server=localhost;Database=HospitalDb;User ID=sa;Password=reallyStrongPwd123;",
+                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
         }
 
+
+
     }
+
 }

@@ -13,19 +13,68 @@ namespace Service
 {
     public class AppointmentService
     {
-        private HosbitalDbContext _context;
+        private readonly HosbitalDbContext _context;
 
         public AppointmentService()
         {
             _context = new HosbitalDbContext();
         }
-
         public void Create(Appointment entity)
         {
-            Patient patient = _context.Patients.Include(x => x.Appointments).FirstOrDefault(x => x.Id == entity.PatientId);
-            if (patient == null) throw new EntityNotFoundException("Patient not found");
-            Doctor doctor = _context.Doctors.Include(x => x.Appointments).FirstOrDefault(x => x.Id == entity.DoctorId);
-            if (doctor == null) throw new EntityNotFoundException("Doctor not found");
+            Patient patient = null;
+            Doctor doctor = null;
+
+            while (patient == null || doctor == null)
+            {
+                int patientId = entity.PatientId;
+                patient = _context.Patients.Include(x => x.Appointments).FirstOrDefault(x => x.Id == patientId);
+
+                if (patient == null)
+                {
+                    Console.WriteLine("Patient not found. Try again? (Y/N)");
+                    if (Console.ReadLine().Trim().ToUpper() == "Y")
+                    {
+                        Console.Write("Enter new Patient ID: ");
+                        int newPatientId;
+                        if (int.TryParse(Console.ReadLine(), out newPatientId))
+                        {
+                            entity.PatientId = newPatientId;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Patient ID format. Please enter a valid integer.");
+                        }
+                    }
+                    else
+                    {
+                        throw new EntityNotFoundException("Patient not found");
+                    }
+                }
+                int doctorId = entity.DoctorId;
+                doctor = _context.Doctors.Include(x => x.Appointments).FirstOrDefault(x => x.Id == doctorId);
+
+                if (doctor == null)
+                {
+                    Console.WriteLine("Doctor not found. Do you want to try again? (Y/N)");
+                    if (Console.ReadLine().Trim().ToUpper() == "Y")
+                    {
+                        Console.Write("Enter new Doctor ID: ");
+                        int newDoctorId;
+                        if (int.TryParse(Console.ReadLine(), out newDoctorId))
+                        {
+                            entity.DoctorId = newDoctorId;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Doctor ID format. Please enter a valid integer.");
+                        }
+                    }
+                    else
+                    {
+                        throw new EntityNotFoundException("Doctor not found");
+                    }
+                }
+            }
             _context.Appointment.Add(entity);
             _context.SaveChanges();
         }
