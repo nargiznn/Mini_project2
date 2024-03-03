@@ -1,24 +1,28 @@
 ﻿<Properties StartupConfiguration="{0A129C71-6EC9-4A80-8339-4CA250FA4E8B}|Default">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Data/HosbitalDbContext.cs">
+  <MonoDevelop.Ide.ItemProperties.HospitalApp PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core/Entity/Patient.cs">
     <Files>
-      <File FileName="Service/PatientService.cs" />
-      <File FileName="Core/Entity/Appointment.cs" />
-      <File FileName="Service/AppointmentService.cs" />
-      <File FileName="Service/DoctorService.cs" />
-      <File FileName="Data/HosbitalDbContext.cs" Line="24" Column="1" />
+      <File FileName="Service/PatientService.cs" Line="24" Column="30" />
+      <File FileName="Core/Entity/Appointment.cs" Line="8" Column="23" />
+      <File FileName="Service/AppointmentService.cs" Line="77" Column="14" />
+      <File FileName="Service/DoctorService.cs" Line="20" Column="18" />
+      <File FileName="Data/HosbitalDbContext.cs" Line="2" Column="20" />
+      <File FileName="HospitalApp/Program.cs" Line="301" Column="6" />
+      <File FileName="Core/Entity/Doctor.cs" Line="6" Column="14" />
+      <File FileName="Core/Entity/Patient.cs" Line="4" Column="19" />
+      <File FileName="Service/Exceptions/EntityDublicateException.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="HospitalApp">
-            <Node name="Data" expanded="True">
-              <Node name="HosbitalDbContext.cs" selected="True" />
+            <Node name="Core" expanded="True">
+              <Node name="Entity" expanded="True" />
             </Node>
+            <Node name="Data" expanded="True" />
+            <Node name="HospitalApp" expanded="True" />
             <Node name="Service" expanded="True">
               <Node name="Exceptions" expanded="True" />
             </Node>
@@ -27,6 +31,8 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.HospitalApp PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

@@ -1,5 +1,6 @@
 ﻿using Core.Entitiy;
 using Data;
+using Microsoft.EntityFrameworkCore;
 using Service.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,66 @@ namespace Service
         }
         public void Create(Patient entity)
         {
-            if (_context.Patients.Any(x => x.Fullname == entity.Fullname))
-                throw new EntityDublicateException("Patient already exists by fullname: " + entity.Fullname);
+            do
+            {
+                while (_context.Patients.Any(x => x.Fullname == entity.Fullname))
+                {
+                    Console.WriteLine("Patient fullname already exists. Please again !");
+                    Console.Write("Fullname: ");
+                    entity.Fullname = Console.ReadLine();
+                }
+
+                do
+                {
+                    if (_context.Patients.Any(x => x.Email == entity.Email))
+                    {
+                        Console.WriteLine("Patient email already exists. Please again !");
+                        Console.Write("Email: ");
+                        entity.Email = Console.ReadLine();
+                    }
+                } while (_context.Patients.Any(x => x.Email == entity.Email));
+
+            } while (_context.Patients.Any(x => x.Fullname == entity.Fullname));
+
             _context.Patients.Add(entity);
             _context.SaveChanges();
         }
-        public List<Patient> ShowAll()
+
+
+
+        public List<string> ShowAll()
         {
-            return _context.Patients.ToList();
+            var patients = _context.Patients.Include(p => p.Appointments).ToList();
+
+            List<string> patientShowAll = new List<string>();
+
+            foreach (var patient in patients)
+            {
+                string patientInf = $"{patient.Id}. {patient.Fullname} ({patient.Email})";
+
+                int countAppointments = patient.Appointments.Count;
+
+                var nextAppointments = patient.Appointments
+                    .Where(a => a.StartDate >= DateTime.Now)
+                    .OrderBy(a => a.StartDate)
+                    .ToList();
+
+                if (nextAppointments.Any())
+                {
+                    DateTime firstNextAppointmentDate = nextAppointments.First().StartDate;
+                    patientInf += $", Count Appointments: {countAppointments}, First next Appointment Date: {firstNextAppointmentDate.ToShortDateString()}";
+                }
+                else
+                {
+                    patientInf += $", Count Appointments: {countAppointments}, No next Appointments";
+                }
+
+                patientShowAll.Add(patientInf);
+            }
+
+            return patientShowAll;
         }
+
         public void Delete(int id)
         {
             var entity = _context.Patients.FirstOrDefault(x => x.Id == id);

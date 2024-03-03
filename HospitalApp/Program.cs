@@ -55,11 +55,10 @@ do
                         //2.Patient delete
                         Console.WriteLine(" Patient delete");
                         Console.WriteLine("All Patients");
-                        var patients2 = patientService.ShowAll();
-
-                        foreach (var item in patients2)
+                        var patients = patientService.ShowAll();
+                        foreach (var patientInfo in patients)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                            Console.WriteLine(patientInfo);
                         }
                         int deleteId= GetId();
 
@@ -77,11 +76,10 @@ do
                         //3.Patient edit
                         Console.WriteLine(" Patient edit");
                         Console.WriteLine("All Patients");
-                        var patients1 = patientService.ShowAll();
-
-                        foreach (var item in patients1)
+                        patients = patientService.ShowAll();
+                        foreach (var patientInfo in patients)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname + " " + "(" + item.Email + ")");
+                            Console.WriteLine(patientInfo);
                         }
                         int id = GetId();
                      var newpatient = GetPatient();
@@ -98,11 +96,10 @@ do
                     case "4":
                         //4.Show all patient
                         Console.WriteLine("All Patients");
-                        var patients = patientService.ShowAll();
-
-                        foreach (var item in patients)
+                        patients = patientService.ShowAll();
+                        foreach (var patientInfo in patients)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname + " " +"("+ item.Email+")" );
+                            Console.WriteLine(patientInfo);
                         }
 
                         break;
@@ -228,10 +225,10 @@ do
                         Console.Write("DoctorId: ");
                         int doctorId = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("All Patients");
-                        var patients2 = patientService.ShowAll();
-                        foreach (var item in patients2)
+                        var patients = patientService.ShowAll();
+                        foreach (var patientInfo in patients)
                         {
-                            Console.WriteLine(item.Id + "." + item.Fullname );
+                            Console.WriteLine(patientInfo);
                         }
                         Console.Write("PatientId: ");
                         int patientId = Convert.ToInt32(Console.ReadLine());
