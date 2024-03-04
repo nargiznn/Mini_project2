@@ -29,8 +29,26 @@ namespace Service
         }
         public void Create(Doctor entity)
         {
-            if (_context.Doctors.Any(x => x.Fullname == entity.Fullname))
-                throw new EntityDublicateException("Doctor already exists by fullname: " + entity.Fullname);
+            do
+            {
+                if (string.IsNullOrWhiteSpace(entity.Fullname) || _context.Doctors.Any(x => x.Fullname == entity.Fullname))
+                {
+                    Console.WriteLine("Already exists or not null enter ,please again !");
+                    Console.Write("Fullname: ");
+                    entity.Fullname = Console.ReadLine();
+                }
+            } while (string.IsNullOrWhiteSpace(entity.Fullname) || _context.Doctors.Any(x => x.Fullname == entity.Fullname));
+
+            do
+            {
+                if (string.IsNullOrWhiteSpace(entity.Email) || _context.Doctors.Any(x => x.Email == entity.Email))
+                {
+                    Console.WriteLine("Already exists or not null enter ,please again !");
+                    Console.Write("Email: ");
+                    entity.Email = Console.ReadLine();
+                }
+            } while (string.IsNullOrWhiteSpace(entity.Email) || _context.Doctors.Any(x => x.Email == entity.Email));
+
             _context.Doctors.Add(entity);
             _context.SaveChanges();
         }

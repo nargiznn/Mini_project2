@@ -25,8 +25,6 @@ namespace Data
                 sqlServerOptions => sqlServerOptions.EnableRetryOnFailure());
         }
 
-
-
     }
 
 }
