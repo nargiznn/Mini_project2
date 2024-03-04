@@ -86,6 +86,8 @@ namespace Service
 
             if (entity == null) throw new EntityNotFoundException("Patient not found");
 
+            Console.WriteLine($"{entity.Id} id Patient is deleted");
+
             _context.Patients.Remove(entity);
             _context.SaveChanges();
         }

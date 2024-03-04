@@ -82,6 +82,8 @@ namespace Service
         {
             Appointment entity = _context.Appointment.Find(id);
             if(entity==null) throw new EntityNotFoundException("Appointment not found");
+            Console.WriteLine($"{entity.Id} id appointememt is deleted");
+
             _context.Appointment.Remove(entity);
             _context.SaveChanges();
 

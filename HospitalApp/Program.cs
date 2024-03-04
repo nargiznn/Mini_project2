@@ -33,7 +33,7 @@ try
         Console.WriteLine("e. Exit");
         Console.WriteLine("Select Opt");
 
-        opt = Console.ReadLine();
+        opt = Console.ReadLine().ToLower();
         HosbitalDbContext context = new HosbitalDbContext();
         PatientService patientService = new PatientService();
         DoctorService doctorService = new DoctorService();
@@ -53,11 +53,7 @@ try
                     optPatient = Console.ReadLine();
                     switch (optPatient)
                     {
-
-
-
-
-                        case "1":
+                      case "1":
                             {
                                 try
                                 {
@@ -159,7 +155,7 @@ try
                             Console.WriteLine("All Patients");
                             patients = patientService.ShowAll();
 
-                            if (patients.Any())
+                            if (patients.Count!=0)
                             {
                                 foreach (var patientInfo in patients)
                                 {
@@ -288,14 +284,23 @@ try
                             }
                             break;
                         case "4":
+
                             Console.WriteLine(" ShowAll doctors");
                             doctors1 = doctorService.ShowAll();
-                            foreach (var item in doctors1)
-                            {
-                                Console.WriteLine(item);
-                            }
 
+                            if (doctors1.Count == 0)
+                            {
+                                Console.WriteLine("No doctors found.");
+                            }
+                            else
+                            {
+                                foreach (var item in doctors1)
+                                {
+                                    Console.WriteLine(item);
+                                }
+                            }
                             break;
+
                         case "0":
                             Console.WriteLine("Finish");
                             break;
@@ -361,7 +366,10 @@ try
 
                             foreach (var item in appointment)
                             {
-                                Console.WriteLine(item.Id + "." + item.DoctorId + " " + item.PatientId + " " + item.StartDate);
+                                Doctor doctor = doctorService.GetById(item.DoctorId);
+                                Patient patient = patientService.GetById(item.PatientId);
+
+                                Console.WriteLine($"{item.Id}. Doctor: {doctor.Fullname}, Patient: {patient.Fullname}, Date: {item.StartDate}");
                             }
                             int deleteId = GetId();
 
@@ -378,11 +386,22 @@ try
                             Console.WriteLine(" Show all appointments");
                             var appointmentAll = appointmentService.ShowAll();
 
-                            foreach (var item in appointmentAll)
+                            if (appointmentAll.Count == 0)
                             {
-                                Console.WriteLine(item.Id + "." + item.DoctorId + " " + item.PatientId + " " + item.StartDate);
+                                Console.WriteLine("No appoinment found.");
+                            }
+                            else
+                            {
+                                foreach (var item in appointmentAll)
+                                {
+                                    Doctor doctor = doctorService.GetById(item.DoctorId);
+                                    Patient patient = patientService.GetById(item.PatientId);
+
+                                    Console.WriteLine($"{item.Id}. Doctor: {doctor.Fullname}, Patient: {patient.Fullname}, Date: {item.StartDate}");
+                                }
                             }
                             break;
+
                         case "4":
                             Console.WriteLine(" Filter appointments (by doctor id or patientId or daterange)");
                             Console.WriteLine("1. Filter by Doctor ID");
