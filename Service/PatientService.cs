@@ -24,30 +24,20 @@ namespace Service
             {
                 while (string.IsNullOrWhiteSpace(entity.Fullname) || _context.Patients.Any(x => x.Fullname == entity.Fullname))
                 {
-                    Console.WriteLine("Already exists or not null enter ,please again !");
+                    Console.WriteLine("Already exists or not null enter please again !");
                     Console.Write("Fullname: ");
                     entity.Fullname = Console.ReadLine();
                 }
 
                 do
                 {
-                    if (string.IsNullOrWhiteSpace(entity.Email) || !IsValidEmail(entity.Email))
+                    if ((string.IsNullOrWhiteSpace(entity.Email) || _context.Patients.Any(x => x.Email == entity.Email)))
                     {
-                        Console.WriteLine("Email format is not true,please try again!");
+                        Console.WriteLine("Patient email already exists. Please again !");
+                        Console.Write("Email: ");
+                        entity.Email = Console.ReadLine();
                     }
-                    else if (_context.Patients.Any(x => x.Email == entity.Email))
-                    {
-                        Console.WriteLine("Email already exists. Please try again");
-                    }
-                } while (string.IsNullOrWhiteSpace(entity.Email) || !IsValidEmail(entity.Email) || _context.Patients.Any(x => x.Email == entity.Email));
-
-                static bool IsValidEmail(string email)
-                {
-                    // Use a simple regex for email validation
-                    string pattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
-                    Regex regex = new Regex(pattern);
-                    return regex.IsMatch(email);
-                }
+                } while (_context.Patients.Any(x => x.Email == entity.Email));
 
             } while (_context.Patients.Any(x => x.Fullname == entity.Fullname));
 

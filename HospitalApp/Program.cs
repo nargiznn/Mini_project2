@@ -53,37 +53,65 @@ try
                     optPatient = Console.ReadLine();
                     switch (optPatient)
                     {
-                       
-                    
 
-                    
+
+
+
                         case "1":
                             {
                                 try
                                 {
-                                    //1.Patient creat
-                                    Console.WriteLine(" Patient create");
+                                    // 1. Patient create
+                                    Console.WriteLine("Patient create");
                                     Console.Write("FullName: ");
                                     string fullname = Console.ReadLine();
-                                    Console.Write("Email: ");
-                                    string email = Console.ReadLine();
+
+                                    string email;
+                                    bool validEmail = false;
+
+                                    do
+                                    {
+                                        Console.Write("Email: ");
+                                        email = Console.ReadLine();
+
+                                        if (IsValidEmail(email))
+                                        {
+                                            validEmail = true;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Email format is not true,please again try.");
+                                        }
+                                    } while (!validEmail);
 
                                     var newPatient = new Patient
                                     {
                                         Fullname = fullname,
                                         Email = email,
-
                                     };
+
                                     patientService.Create(newPatient);
-                                    
                                 }
                                 catch (Exception ex)
                                 {
-                                    Console.WriteLine("An unexpected error occurred: " + ex.Message);
+                                    Console.WriteLine("Error happen: " + ex.Message);
                                 }
-                                
                             }
                             break;
+
+                             static bool IsValidEmail(string email)
+                            {
+                                try
+                                {
+                                    var addr = new System.Net.Mail.MailAddress(email);
+                                    return addr.Address == email;
+                                }
+                                catch
+                                {
+                                    return false;
+                                }
+                            }
+
                         case "2":
                             //2.Patient delete
                             Console.WriteLine(" Patient delete");
@@ -162,18 +190,59 @@ try
                     switch (optDoctor)
                     {
                         case "1":
-                            Console.WriteLine(" Doctor creat");
-                            Console.Write("FullName: ");
-                            string fullname = Console.ReadLine();
-                            Console.Write("Email: ");
-                            string email = Console.ReadLine();
-                            var newDoctor = new Doctor
+                            { 
+                            try
                             {
-                                Fullname = fullname,
-                                Email = email,
-                            };
-                            doctorService.Create(newDoctor);
-                            break;
+                                Console.WriteLine(" Doctor creat");
+                                Console.Write("FullName: ");
+                                string fullname = Console.ReadLine();
+
+                                string email;
+                                bool validEmail = false;
+
+                                do
+                                {
+                                    Console.Write("Email: ");
+                                    email = Console.ReadLine();
+
+                                    if (IsValidEmail(email))
+                                    {
+                                        validEmail = true;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Email format is not true,please again try.");
+                                    }
+                                } while (!validEmail);
+
+                                var newdoctor1 = new Doctor
+                                {
+                                    Fullname = fullname,
+                                    Email = email,
+                                };
+
+                                doctorService.Create(newdoctor1);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Error happen: " + ex.Message);
+                            }
+                    }
+                    break;
+
+                    static bool IsValidEmail(string email)
+                    {
+                        try
+                        {
+                            var addr = new System.Net.Mail.MailAddress(email);
+                            return addr.Address == email;
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    }
+                
                         case "2":
                             Console.WriteLine(" Edit doctor");
                             Console.WriteLine("All Doctors :");
