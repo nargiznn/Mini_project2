@@ -132,11 +132,21 @@ namespace Service
                 .ToList();
         }
 
+
         public List<Appointment> FilterByDateRange(DateTime startDate, DateTime endDate)
         {
             return _context.Appointment
                 .Where(appointment => appointment.StartDate >= startDate && appointment.StartDate <= endDate)
                 .ToList();
+        }
+        public bool HasAppointmentWithinLast30Minutes(int patientId, int doctorId)
+        {
+            DateTime thirtyMinutesAgo = DateTime.Now.AddMinutes(-30);
+
+            return _context.Appointment
+                .Any(appointment => appointment.PatientId == patientId
+                                    && appointment.DoctorId == doctorId
+                                    && appointment.StartDate >= thirtyMinutesAgo);
         }
     }
     }
