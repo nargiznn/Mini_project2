@@ -326,39 +326,92 @@ try
                     switch (optAppointment)
                     {
                         case "1":
-                            Console.WriteLine(" Make an appointment");
-                            Console.WriteLine("All Doctors ");
-                            var doctors3 = doctorService.ShowAll();
-                            foreach (var item in doctors3)
+                            try
                             {
-                                Console.WriteLine(item);
-                            }
+                                Console.WriteLine(" Make an appointment");
+                                Console.WriteLine("All Doctors ");
+                                var doctors3 = doctorService.ShowAll();
+                                foreach (var item in doctors3)
+                                {
+                                    Console.WriteLine(item);
+                                }
 
-                            Console.Write("DoctorId: ");
-                            int doctorId = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("All Patients");
-                            var patients = patientService.ShowAll();
-                            foreach (var patientInfo in patients)
-                            {
-                                Console.WriteLine(patientInfo);
-                            }
-                            Console.Write("PatientId: ");
-                            int patientId = Convert.ToInt32(Console.ReadLine());
-                            Console.Write("Datetime (yyyy/MM/dd: ");
-                            DateTime startDate;
+                                int doctorId;
+                                bool validDoctorId = false;
 
-                            while (!DateTime.TryParseExact(Console.ReadLine(), "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
-                            {
-                                Console.WriteLine("Invalid date format. Enter the date in the correct format (yyyy/MM/dd): ");
+                                do
+                                {
+                                    Console.Write("DoctorId: ");
+
+
+                                    doctorId = Convert.ToInt32(Console.ReadLine());
+                                    validDoctorId = true;
+
+
+
+                                } while (!validDoctorId);
+
+                                Console.WriteLine("All Patients");
+                                var patients = patientService.ShowAll();
+                                foreach (var patientInfo in patients)
+                                {
+                                    Console.WriteLine(patientInfo);
+                                }
+
+                                int patientId;
+                                bool validPatientId = false;
+
+                                do
+                                {
+                                    Console.Write("PatientId: ");
+
+
+                                    patientId = Convert.ToInt32(Console.ReadLine());
+                                    validPatientId = true;
+
+
+
+                                } while (!validPatientId);
+
+                                DateTime startDate;
+
+                                do
+                                {
+                                    Console.Write("Datetime (yyyy/MM/dd HH:mm): ");
+
+                                    if (DateTime.TryParseExact(Console.ReadLine(), "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate))
+                                    {
+                                        if (startDate > DateTime.Now.AddMinutes(30)) // Ensure the appointment is at least 30 minutes later
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Invalid appointment time. Please schedule the appointment at least 30 minutes later.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Invalid date format. Enter the date in the correct format (yyyy/MM/dd HH:mm): ");
+                                    }
+
+                                } while (true);
+
+                                var newAppointment = new Appointment
+                                {
+                                    DoctorId = doctorId,
+                                    PatientId = patientId,
+                                    StartDate = startDate,
+                                };
+                                appointmentService.Create(newAppointment);
                             }
-                            var newappointment = new Appointment
+                            catch (FormatException)
                             {
-                                DoctorId = doctorId,
-                                PatientId = patientId,
-                                StartDate = startDate,
-                            };
-                            appointmentService.Create(newappointment);
+                                Console.WriteLine("Invalid input format. Please enter a valid integer for Doctor ID.");
+                            }
                             break;
+
+
                         case "2":
                             Console.WriteLine(" Cancel Appointment");
                             Console.WriteLine("All Appointment");
@@ -434,7 +487,7 @@ try
 
                                 case "2":
                                     Console.WriteLine("All Patients");
-                                    patients = patientService.ShowAll();
+                                   var patients = patientService.ShowAll();
                                     foreach (var patientInfo in patients)
                                     {
                                         Console.WriteLine(patientInfo);
